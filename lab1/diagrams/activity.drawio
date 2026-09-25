@@ -24,7 +24,7 @@
         <mxCell id="ibScrVInPwBEl_T2YEsK-7" parent="1" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.start_2;whiteSpace=wrap;strokeColor=light-dark(#FFFFFF,#000000);" value="" vertex="1">
           <mxGeometry height="60" width="60" x="60" y="110" as="geometry" />
         </mxCell>
-        <mxCell id="ibScrVInPwBEl_T2YEsK-20" edge="1" parent="1" source="ibScrVInPwBEl_T2YEsK-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ibScrVInPwBEl_T2YEsK-19" value="">
+        <mxCell id="ibScrVInPwBEl_T2YEsK-20" edge="1" parent="1" source="ibScrVInPwBEl_T2YEsK-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ibScrVInPwBEl_T2YEsK-19" value="">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ibScrVInPwBEl_T2YEsK-8" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="&lt;br&gt;&lt;pre dir=&quot;ltr&quot;&gt;&lt;code&gt;Подтвердить&lt;br&gt; заказ&lt;/code&gt;&lt;/pre&gt;&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" vertex="1">
@@ -59,7 +59,16 @@
           <mxGeometry height="100" width="100" x="470" y="330" as="geometry" />
         </mxCell>
         <mxCell id="ibScrVInPwBEl_T2YEsK-19" parent="1" style="ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#ff0000;" value="" vertex="1">
-          <mxGeometry height="30" width="30" x="610" y="45" as="geometry" />
+          <mxGeometry height="30" width="30" x="770" y="45" as="geometry" />
+        </mxCell>
+        <mxCell id="ibScrVInPwBEl_T2YEsK-23" edge="1" parent="1" source="ibScrVInPwBEl_T2YEsK-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="ibScrVInPwBEl_T2YEsK-21" value="">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="570" y="60" as="sourcePoint" />
+            <mxPoint x="790" y="60" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ibScrVInPwBEl_T2YEsK-21" parent="1" style="rounded=1;whiteSpace=wrap;html=1;absoluteArcSize=1;arcSize=14;strokeWidth=2;" value="Отправить подтверждение клиенту" vertex="1">
+          <mxGeometry height="100" width="100" x="630" y="10" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
