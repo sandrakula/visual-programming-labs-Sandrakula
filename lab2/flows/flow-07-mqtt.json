@@ -1,0 +1,138 @@
+[
+  {
+    "id": "f27a000000000001",
+    "type": "tab",
+    "label": "2.7 — MQTT",
+    "disabled": false,
+    "info": "Публикация случайной температуры каждые 5 секунд и получение сообщения через публичный MQTT-брокер."
+  },
+  {
+    "id": "f27a000000000002",
+    "type": "inject",
+    "z": "f27a000000000001",
+    "name": "Каждые 5 секунд",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 190,
+    "y": 140,
+    "wires": [
+      [
+        "f27a000000000003"
+      ]
+    ]
+  },
+  {
+    "id": "f27a000000000003",
+    "type": "function",
+    "z": "f27a000000000001",
+    "name": "Случайная температура 20–35 °C",
+    "func": "msg.payload = Number((20 + Math.random() * 15).toFixed(1));\nmsg.topic = \"student/Sandrakula/lab2/temperature\";\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 470,
+    "y": 140,
+    "wires": [
+      [
+        "f27a000000000004"
+      ]
+    ]
+  },
+  {
+    "id": "f27a000000000004",
+    "type": "mqtt out",
+    "z": "f27a000000000001",
+    "name": "Опубликовать температуру",
+    "topic": "",
+    "qos": "0",
+    "retain": "false",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "f27a000000000007",
+    "x": 770,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "f27a000000000005",
+    "type": "mqtt in",
+    "z": "f27a000000000001",
+    "name": "Получить температуру",
+    "topic": "student/Sandrakula/lab2/temperature",
+    "qos": "0",
+    "datatype": "auto-detect",
+    "broker": "f27a000000000007",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 230,
+    "y": 300,
+    "wires": [
+      [
+        "f27a000000000006"
+      ]
+    ]
+  },
+  {
+    "id": "f27a000000000006",
+    "type": "debug",
+    "z": "f27a000000000001",
+    "name": "Полученное MQTT-сообщение",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 540,
+    "y": 300,
+    "wires": []
+  },
+  {
+    "id": "f27a000000000007",
+    "type": "mqtt-broker",
+    "name": "HiveMQ public",
+    "broker": "broker.hivemq.com",
+    "port": "1883",
+    "clientid": "Sandrakula-lab2-node-red",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "autoUnsubscribe": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willPayload": "",
+    "willMsg": {},
+    "userProps": "",
+    "sessionExpiry": ""
+  }
+]
