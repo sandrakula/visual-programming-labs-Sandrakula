@@ -40,3 +40,23 @@
 
 Скриншот: [04-change.png](../screenshots/04-change.png).
 
+## Задание 2.5 — Template
+
+1. Открыть вкладку **«2.5 — Template»** и очистить панель Debug.
+2. Нажать Inject **«Данные студента»**.
+3. Развернуть `msg.payload` в Debug. Проверить поля `student = Sandrakula`, `subject = Visual Programming`, `lab = Node-RED` и строку `Student Sandrakula is working with Node-RED`.
+4. Объяснить ноды: Inject передаёт исходный объект и topic; Template подставляет его значения в Mustache-шаблон и создаёт JSON; Debug показывает готовый объект.
+5. Объяснить выражения `{{payload.student}}`, `{{payload.subject}}` и `{{payload.lab}}`: это ссылки на поля входного объекта сообщения.
+
+Скриншот: [05-template.png](../screenshots/05-template.png).
+
+## Задание 2.6 — HTTP Request
+
+1. Открыть вкладку **«2.6 — HTTP Request»** и очистить панель Debug.
+2. Нажать Inject **«Выполнить GET»**.
+3. Развернуть объект в Debug, затем поле `payload`. Проверить `statusCode: 200` и разобранные поля `userId`, `id`, `title`, `completed`.
+4. Объяснить ноды: Inject запускает запрос вручную; HTTP Request выполняет GET к JSONPlaceholder и преобразует JSON-ответ в объект; Debug показывает полный `msg`.
+5. Подчеркнуть, что `ret = obj` в настройке HTTP Request обеспечивает разбор JSON без дополнительной Function-ноды.
+
+Скриншот: [06-http-request.png](../screenshots/06-http-request.png).
+

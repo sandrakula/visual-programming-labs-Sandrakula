@@ -1,0 +1,79 @@
+[
+  {
+    "id": "f26a000000000001",
+    "type": "tab",
+    "label": "2.6 — HTTP Request",
+    "disabled": false,
+    "info": "Ручной GET-запрос к JSONPlaceholder с разбором ответа как JSON."
+  },
+  {
+    "id": "f26a000000000002",
+    "type": "inject",
+    "z": "f26a000000000001",
+    "name": "Выполнить GET",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "lab2/Sandrakula/http",
+    "payload": "",
+    "payloadType": "str",
+    "x": 180,
+    "y": 160,
+    "wires": [
+      [
+        "f26a000000000003"
+      ]
+    ]
+  },
+  {
+    "id": "f26a000000000003",
+    "type": "http request",
+    "z": "f26a000000000001",
+    "name": "GET todo #1",
+    "method": "GET",
+    "ret": "obj",
+    "paytoqs": "ignore",
+    "url": "https://jsonplaceholder.typicode.com/todos/1",
+    "tls": "",
+    "persist": false,
+    "proxy": "",
+    "insecureHTTPParser": false,
+    "authType": "",
+    "senderr": false,
+    "headers": [],
+    "x": 410,
+    "y": 160,
+    "wires": [
+      [
+        "f26a000000000004"
+      ]
+    ]
+  },
+  {
+    "id": "f26a000000000004",
+    "type": "debug",
+    "z": "f26a000000000001",
+    "name": "Полный ответ HTTP",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 650,
+    "y": 160,
+    "wires": []
+  }
+]

@@ -1,0 +1,74 @@
+[
+  {
+    "id": "f25a000000000001",
+    "type": "tab",
+    "label": "2.5 — Template",
+    "disabled": false,
+    "info": "Формирование JSON-объекта из входных данных с помощью Mustache-шаблона."
+  },
+  {
+    "id": "f25a000000000002",
+    "type": "inject",
+    "z": "f25a000000000001",
+    "name": "Данные студента",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": false,
+    "onceDelay": 0.1,
+    "topic": "lab2/Sandrakula/template",
+    "payload": "{\"student\":\"Sandrakula\",\"subject\":\"Visual Programming\",\"lab\":\"Node-RED\"}",
+    "payloadType": "json",
+    "x": 190,
+    "y": 160,
+    "wires": [
+      [
+        "f25a000000000003"
+      ]
+    ]
+  },
+  {
+    "id": "f25a000000000003",
+    "type": "template",
+    "z": "f25a000000000001",
+    "name": "Mustache JSON",
+    "field": "payload",
+    "fieldType": "msg",
+    "format": "handlebars",
+    "syntax": "mustache",
+    "template": "{\n  \"student\": \"{{payload.student}}\",\n  \"subject\": \"{{payload.subject}}\",\n  \"lab\": \"{{payload.lab}}\",\n  \"message\": \"Student {{payload.student}} is working with {{payload.lab}}\"\n}",
+    "output": "json",
+    "x": 430,
+    "y": 160,
+    "wires": [
+      [
+        "f25a000000000004"
+      ]
+    ]
+  },
+  {
+    "id": "f25a000000000004",
+    "type": "debug",
+    "z": "f25a000000000001",
+    "name": "Результат шаблона",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 670,
+    "y": 160,
+    "wires": []
+  }
+]
