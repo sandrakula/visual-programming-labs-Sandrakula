@@ -1,0 +1,92 @@
+[
+  {
+    "id": "f24a000000000001",
+    "type": "tab",
+    "label": "2.4 — Change",
+    "disabled": false,
+    "info": "Change задаёт topic, текущее время timestamp и новый текст payload."
+  },
+  {
+    "id": "f24a000000000002",
+    "type": "inject",
+    "z": "f24a000000000001",
+    "name": "Исходное сообщение",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.2",
+    "topic": "",
+    "payload": "Запуск обработки",
+    "payloadType": "str",
+    "x": 190,
+    "y": 160,
+    "wires": [
+      [
+        "f24a000000000003"
+      ]
+    ]
+  },
+  {
+    "id": "f24a000000000003",
+    "type": "change",
+    "z": "f24a000000000001",
+    "name": "Данные Sandrakula",
+    "rules": [
+      {
+        "t": "set",
+        "p": "topic",
+        "pt": "msg",
+        "to": "lab2/Sandrakula/change",
+        "tot": "str"
+      },
+      {
+        "t": "set",
+        "p": "timestamp",
+        "pt": "msg",
+        "to": "$millis()",
+        "tot": "jsonata"
+      },
+      {
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "Сообщение обработано для Sandrakula",
+        "tot": "str"
+      }
+    ],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 430,
+    "y": 160,
+    "wires": [
+      [
+        "f24a000000000004"
+      ]
+    ]
+  },
+  {
+    "id": "f24a000000000004",
+    "type": "debug",
+    "z": "f24a000000000001",
+    "name": "Полный объект msg",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 660,
+    "y": 160,
+    "wires": []
+  }
+]

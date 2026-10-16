@@ -1,0 +1,152 @@
+[
+  {
+    "id": "f23a000000000001",
+    "type": "tab",
+    "label": "2.3 — Switch",
+    "disabled": false,
+    "info": "Два входных числа проходят одинаковое вычисление и направляются Switch в разные выходы."
+  },
+  {
+    "id": "f23a000000000002",
+    "type": "inject",
+    "z": "f23a000000000001",
+    "name": "Число 6 → результат 91",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.2",
+    "topic": "lab2/Sandrakula/switch",
+    "payload": "6",
+    "payloadType": "num",
+    "x": 190,
+    "y": 120,
+    "wires": [
+      [
+        "f23a000000000004"
+      ]
+    ]
+  },
+  {
+    "id": "f23a000000000003",
+    "type": "inject",
+    "z": "f23a000000000001",
+    "name": "Число 3 → результат 14",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "lab2/Sandrakula/switch",
+    "payload": "3",
+    "payloadType": "num",
+    "x": 190,
+    "y": 200,
+    "wires": [
+      [
+        "f23a000000000004"
+      ]
+    ]
+  },
+  {
+    "id": "f23a000000000004",
+    "type": "function",
+    "z": "f23a000000000001",
+    "name": "Сумма квадратов",
+    "func": "const input = Number(msg.payload);\nlet total = 0;\nconst squares = [];\n\nfor (let i = 1; i <= input; i++) {\n    const square = i * i;\n    squares.push(square);\n    total += square;\n}\n\nlet category;\nif (total >= 50) {\n    category = \"не меньше 50\";\n} else {\n    category = \"меньше 50\";\n}\n\nconst details = {\n    student: \"Sandrakula\",\n    input: input,\n    squares: squares,\n    total: total,\n    category: category\n};\n\nmsg.calculation = details;\nmsg.payload = total;\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 450,
+    "y": 160,
+    "wires": [
+      [
+        "f23a000000000005"
+      ]
+    ]
+  },
+  {
+    "id": "f23a000000000005",
+    "type": "switch",
+    "z": "f23a000000000001",
+    "name": "msg.payload ≥ 50?",
+    "property": "payload",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "gte",
+        "v": "50",
+        "vt": "num"
+      },
+      {
+        "t": "else"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 670,
+    "y": 160,
+    "wires": [
+      [
+        "f23a000000000006"
+      ],
+      [
+        "f23a000000000007"
+      ]
+    ]
+  },
+  {
+    "id": "f23a000000000006",
+    "type": "debug",
+    "z": "f23a000000000001",
+    "name": "Ветка 1: ≥ 50",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 900,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "f23a000000000007",
+    "type": "debug",
+    "z": "f23a000000000001",
+    "name": "Ветка 2: < 50",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 900,
+    "y": 200,
+    "wires": []
+  }
+]

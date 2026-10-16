@@ -1,0 +1,75 @@
+[
+  {
+    "id": "f22a000000000001",
+    "type": "tab",
+    "label": "2.2 — Function",
+    "disabled": false,
+    "info": "Вычисление суммы квадратов чисел от 1 до входного значения с помощью Function."
+  },
+  {
+    "id": "f22a000000000002",
+    "type": "inject",
+    "z": "f22a000000000001",
+    "name": "Число 6",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.2",
+    "topic": "lab2/Sandrakula/function",
+    "payload": "6",
+    "payloadType": "num",
+    "x": 170,
+    "y": 160,
+    "wires": [
+      [
+        "f22a000000000003"
+      ]
+    ]
+  },
+  {
+    "id": "f22a000000000003",
+    "type": "function",
+    "z": "f22a000000000001",
+    "name": "Сумма квадратов",
+    "func": "const input = Number(msg.payload);\nlet total = 0;\nconst squares = [];\n\nfor (let i = 1; i <= input; i++) {\n    const square = i * i;\n    squares.push(square);\n    total += square;\n}\n\nlet category;\nif (total >= 50) {\n    category = \"большой результат\";\n} else {\n    category = \"малый результат\";\n}\n\nconst result = {\n    student: \"Sandrakula\",\n    input: input,\n    squares: squares,\n    total: total,\n    category: category\n};\n\nmsg.payload = result;\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 380,
+    "y": 160,
+    "wires": [
+      [
+        "f22a000000000004"
+      ]
+    ]
+  },
+  {
+    "id": "f22a000000000004",
+    "type": "debug",
+    "z": "f22a000000000001",
+    "name": "Результат вычисления",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 620,
+    "y": 160,
+    "wires": []
+  }
+]
