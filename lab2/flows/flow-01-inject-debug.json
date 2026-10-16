@@ -1,0 +1,55 @@
+[
+  {
+    "id": "f21a000000000001",
+    "type": "tab",
+    "label": "2.1 — Inject Debug",
+    "disabled": false,
+    "info": "Первый поток лабораторной №2: сообщение Sandrakula отправляется в Debug каждые 5 секунд."
+  },
+  {
+    "id": "f21a000000000002",
+    "type": "inject",
+    "z": "f21a000000000001",
+    "name": "Каждые 5 секунд — Sandrakula",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.1",
+    "topic": "lab2/Sandrakula/basic",
+    "payload": "Sandrakula",
+    "payloadType": "str",
+    "x": 250,
+    "y": 160,
+    "wires": [
+      [
+        "f21a000000000003"
+      ]
+    ]
+  },
+  {
+    "id": "f21a000000000003",
+    "type": "debug",
+    "z": "f21a000000000001",
+    "name": "Полный объект msg",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 550,
+    "y": 160,
+    "wires": []
+  }
+]

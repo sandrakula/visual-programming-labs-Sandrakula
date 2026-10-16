@@ -1,0 +1,12 @@
+services:
+  node-red:
+    image: nodered/node-red:5.0.8
+    container_name: visual-programming-lab2-nodered
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    volumes:
+      - type: bind
+        source: ./node-red-data
+        target: /data
+

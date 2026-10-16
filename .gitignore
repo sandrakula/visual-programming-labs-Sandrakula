@@ -1,0 +1,9 @@
+# Node-RED runtime data contains generated state, credentials and tokens.
+lab2/node-red-data/
+
+# Local environment overrides and secrets.
+.env
+.env.*
+!.env.example
+*.credentials.json
+
