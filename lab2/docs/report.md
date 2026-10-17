@@ -165,6 +165,46 @@ return msg;
 
 Скриншоты: [полная схема](../screenshots/08-endpoints-flow.png), [текстовый ответ](../screenshots/08-api-text.png), [JSON-информация](../screenshots/08-api-info.png), [успешный поиск](../screenshots/08-api-items-success.png), [ошибка 400](../screenshots/08-api-items-error-400.png), [ошибка 404](../screenshots/08-api-items-error-404.png).
 
+## Задание 2.9 — Dashboard
+
+На отдельной вкладке **«2.9 — Dashboard»** создан поток `Inject → Function`, от выхода Function проведены два соединения: одно к Gauge, другое к Chart.
+
+- Inject **«Temperature every 5 sec»** автоматически отправляет сообщение каждые 5 секунд. Начальный `msg.payload` — число `1`, `msg.topic` — `lab2/Sandrakula/temperature`.
+- Function **«Generate temperature»** генерирует случайную температуру в диапазоне 20–35 °C с одним знаком после запятой:
+
+```javascript
+const minTemp = 20;
+const maxTemp = 35;
+
+const temperature = Math.round(
+    (Math.random() * (maxTemp - minTemp) + minTemp) * 10
+) / 10;
+
+msg.payload = temperature;
+msg.topic = "Temperature";
+return msg;
+```
+
+`Math.random()` создаёт случайную дробь, формула переводит её в диапазон от 20 до 35, а `Math.round(...) / 10` оставляет один знак после запятой. Число записывается в `msg.payload`, а в `msg.topic` — подпись серии `Temperature`.
+
+Dashboard построен на установленном пакете **node-red-dashboard 3.6.6** (классический dashboard с нодами `ui_gauge` и `ui_chart`).
+
+- Dashboard Tab: **«Sandrakula Lab 2»**;
+- Dashboard Group: **«Temperature Monitoring»** — в ней размещены обе ноды.
+
+Gauge **«Current Temperature»** показывает текущую температуру: диапазон 0–50 °C, единицы `°C`, значение берётся из `msg.payload`. Chart **«Temperature History»** — линейный график, который накапливает историю по серии `Temperature` и хранит данные за последние 10 минут.
+
+Dashboard доступен по адресу [http://localhost:1880/ui](http://localhost:1880/ui).
+
+### Результаты проверки 2.9
+
+- Страница `/ui` отвечает HTTP-кодом `200`, вкладка Dashboard развёрнута без ошибок.
+- Через подключение к socket.io дашборда фактически подтверждено поступление данных: Gauge получает числовые значения температуры (например `33.4`, `27.5`, `33.1`), Chart получает серию `Temperature` с историей значений во времени. Временные метки идут с интервалом около 5 секунд, значения находятся в диапазоне 20–35 °C.
+- Обнаружена и исправлена ошибка конфигурации: у ноды `ui_base` отсутствовало обязательное поле `site.sizes`, из-за чего страница падала с ошибкой `Cannot read properties of undefined (reading 'sy')`. После добавления стандартных размеров `sx:48, sy:48, gx:6, gy:6, cx:6, cy:6, px:0, py:0` конфигурация передаётся корректно.
+- Визуальное отображение Gauge и Chart в браузере отдельно не проверялось и требует ручного подтверждения на странице `/ui`.
+
+Экспорт потока: `lab2/flows/flow-09-dashboard.json`. Скриншоты: [09-dashboard.png](../screenshots/09-dashboard.png) (интерфейс Dashboard) и [09-dashboard-flow.png](../screenshots/09-dashboard-flow.png) (схема потока).
+
 ## Итог этапа 5
 
 В Node-RED одновременно доступны восемь отдельных вкладок: 2.1–2.8. Каждый поток сохранён отдельным импортируемым JSON-файлом. Перед развёртыванием GET-эндпоинтов создана локальная резервная копия. Состояние хранится в bind mount `/data`; после перезапуска контейнера повторно проверяются наличие всех вкладок и работа маршрутов.
@@ -184,4 +224,5 @@ return msg;
 - «Настрой HTTP Request для GET-запроса к JSONPlaceholder, разбери ответ как JSON и проверь `statusCode: 200`».
 - «Создай вкладку MQTT с публикацией случайной температуры каждые 5 секунд в публичный HiveMQ-брокер, подпишись на тот же топик через MQTT In и подтверди несколько реально полученных сообщений».
 - «Создай в Node-RED три GET-эндпоинта `/api/text`, `/api/info` и `/api/items?id=...`, корректно установи Content-Type и статусы 200, 400, 404, затем проверь все варианты реальными HTTP-запросами».
+- «Создай в Node-RED вкладку 2.9 Dashboard на базе node-red-dashboard 3.6.6: Inject каждые 5 секунд, Function генерирует температуру 20–35 °C, одна Function с двумя выходами на Gauge и Chart; Gauge показывает текущее значение в диапазоне 0–50 °C, Chart — историю за 10 минут; разверни в работающем Node-RED и проверь поступление данных через socket.io».
 

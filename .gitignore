@@ -7,3 +7,6 @@ lab2/node-red-data/
 !.env.example
 *.credentials.json
 
+# Temporary browser automation profiles (e.g. Codex/Edge) must not be tracked.
+/.edge-shot-profile-*/
+

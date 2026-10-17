@@ -1,0 +1,175 @@
+[
+  {
+    "id": "f29a000000000001",
+    "type": "tab",
+    "label": "2.9 — Dashboard",
+    "disabled": false,
+    "info": "Dashboard с Gauge и Chart: случайная температура (20–35 °C) каждые 5 секунд."
+  },
+  {
+    "id": "f29a000000000002",
+    "type": "inject",
+    "z": "f29a000000000001",
+    "name": "Temperature every 5 sec",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "5",
+    "crontab": "",
+    "once": true,
+    "onceDelay": 0.5,
+    "topic": "lab2/Sandrakula/temperature",
+    "payload": "1",
+    "payloadType": "num",
+    "x": 200,
+    "y": 180,
+    "wires": [
+      [
+        "f29a000000000003"
+      ]
+    ]
+  },
+  {
+    "id": "f29a000000000003",
+    "type": "function",
+    "z": "f29a000000000001",
+    "name": "Generate temperature",
+    "func": "const minTemp = 20;\nconst maxTemp = 35;\n\nconst temperature = Math.round(\n    (Math.random() * (maxTemp - minTemp) + minTemp) * 10\n) / 10;\n\nmsg.payload = temperature;\nmsg.topic = \"Temperature\";\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 420,
+    "y": 180,
+    "wires": [
+      [
+        "f29a000000000004",
+        "f29a000000000005"
+      ]
+    ]
+  },
+  {
+    "id": "f29a000000000004",
+    "type": "ui_gauge",
+    "z": "f29a000000000001",
+    "name": "Current Temperature",
+    "group": "f29a000000000008",
+    "order": 0,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "Temperature",
+    "label": "°C",
+    "format": "{{value}}",
+    "min": 0,
+    "max": 50,
+    "colors": [
+      "#00B500",
+      "#E6E600",
+      "#CA3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 660,
+    "y": 100,
+    "wires": []
+  },
+  {
+    "id": "f29a000000000005",
+    "type": "ui_chart",
+    "z": "f29a000000000001",
+    "name": "Temperature History",
+    "group": "f29a000000000008",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "label": "Temperature History",
+    "chartType": "line",
+    "legend": "true",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "",
+    "dot": false,
+    "ymin": "",
+    "ymax": "",
+    "removeOlder": "10",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "60",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#1F77B4",
+      "#AEC7E8",
+      "#FF7F0E",
+      "#2CA02C",
+      "#98DF8A",
+      "#D62728",
+      "#FF9896",
+      "#9467BD",
+      "#C5B0D5"
+    ],
+    "outputs": 1,
+    "useDifferentColor": false,
+    "className": "",
+    "x": 660,
+    "y": 300,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "f29a000000000006",
+    "type": "ui_base",
+    "name": "Sandrakula Lab 2",
+    "theme": {
+      "name": "theme-light"
+    },
+    "site": {
+      "name": "Sandrakula Lab 2",
+      "title": "Sandrakula Lab 2",
+      "sizes": {
+        "sx": 48,
+        "sy": 48,
+        "gx": 6,
+        "gy": 6,
+        "cx": 6,
+        "cy": 6,
+        "px": 0,
+        "py": 0
+      }
+    }
+  },
+  {
+    "id": "f29a000000000007",
+    "type": "ui_tab",
+    "name": "Sandrakula Lab 2",
+    "icon": "dashboard",
+    "order": 0,
+    "disabled": false,
+    "hidden": false
+  },
+  {
+    "id": "f29a000000000008",
+    "type": "ui_group",
+    "name": "Temperature Monitoring",
+    "tab": "f29a000000000007",
+    "order": 0,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "disabled": false,
+    "hidden": false,
+    "className": ""
+  }
+]
