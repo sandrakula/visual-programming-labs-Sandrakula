@@ -205,9 +205,36 @@ Dashboard доступен по адресу [http://localhost:1880/ui](http://l
 
 Экспорт потока: `lab2/flows/flow-09-dashboard.json`. Скриншоты: [09-dashboard.png](../screenshots/09-dashboard.png) (интерфейс Dashboard) и [09-dashboard-flow.png](../screenshots/09-dashboard-flow.png) (схема потока).
 
-## Итог этапа 5
+## Задание 2.10 — Telegram Bot
 
-В Node-RED одновременно доступны восемь отдельных вкладок: 2.1–2.8. Каждый поток сохранён отдельным импортируемым JSON-файлом. Перед развёртыванием GET-эндпоинтов создана локальная резервная копия. Состояние хранится в bind mount `/data`; после перезапуска контейнера повторно проверяются наличие всех вкладок и работа маршрутов.
+На отдельной вкладке **«2.10 — Telegram Bot»** создан Telegram-бот `@tvl_lab2_sandrakula_bot`. В работе используется пакет **node-red-contrib-telegrambot 19.0.3** и одна общая конфигурационная нода **«Sandrakula Lab2 Bot»** в режиме Polling.
+
+Поток состоит из трёх веток:
+
+1. `Telegram Command /start → Function → Telegram Sender` — отправляет приветствие и предлагает открыть `/help`.
+2. `Telegram Command /help → Function → Telegram Sender` — выводит список доступных команд и описание Echo.
+3. `Telegram Receiver → Function → Telegram Sender` — повторяет обычные текстовые сообщения.
+
+Ноды **Telegram Command** принимают только заданные команды. **Telegram Receiver** получает входящие сообщения для Echo. Function **«Echo text»** пропускает только сообщения типа `message` с непустым строковым содержимым и отбрасывает строки, начинающиеся с `/`. Поэтому `/start` и `/help` не попадают в Echo и не дают дублирующихся ответов. **Telegram Sender** использует `msg.payload.chatId`, полученный от входной ноды, и отправляет `msg.payload.content` как сообщение типа `message`.
+
+Токен введён только в credential-поле конфигурационной ноды Node-RED. Он не входит в экспорт `flow-10-telegram.json`, документацию или Git. Все шесть Telegram-нод используют один и тот же Bot config.
+
+### Результаты проверки 2.10
+
+- контейнер `visual-programming-lab2-nodered` работает и имеет статус `healthy`;
+- Telegram-ноды показывают состояние `connected`, Polling активен;
+- в свежих логах отсутствуют ошибки `bot not initialized`, `401` и `409`;
+- `/start` вернул одно приветственное сообщение;
+- `/help` вернул одно сообщение со списком команд;
+- сообщение `Привет` было повторено как `Привет`;
+- сообщение `Проверка 123` было повторено как `Проверка 123`;
+- команды не были повторно обработаны веткой Echo.
+
+Экспорт потока: `lab2/flows/flow-10-telegram.json`. Скриншоты: [полная схема Telegram-потока](../screenshots/10-telegram-flow.png) и [реальная переписка с ботом](../screenshots/10-telegram.png).
+
+## Итог этапа 7
+
+В Node-RED одновременно сохранены десять отдельных вкладок: 2.1–2.10. Каждый поток сохранён отдельным импортируемым JSON-файлом. Перед изменением Telegram credential создана локальная резервная копия `flows.json` в исключённой из Git папке `lab2/backups`. Состояние хранится в bind mount `/data`; работоспособность Node-RED, HTTP-маршрутов, MQTT, Dashboard и Telegram-бота подтверждена реальными проверками.
 
 ## Использованные AI-промпты
 

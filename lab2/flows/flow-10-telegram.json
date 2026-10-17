@@ -1,0 +1,187 @@
+[
+  {
+    "id": "f2aa000000000001",
+    "type": "tab",
+    "label": "2.10 — Telegram Bot",
+    "disabled": false,
+    "info": "Telegram-бот: команды /start и /help, а также эхо обычных текстовых сообщений. Токен вводится в credential-поле конфигурационной ноды Telegram Bot."
+  },
+  {
+    "id": "f2aa000000000002",
+    "type": "telegram bot",
+    "botname": "Sandrakula Lab2 Bot",
+    "usernames": "",
+    "chatids": "",
+    "baseapiurl": "",
+    "testenvironment": false,
+    "updatemode": "polling",
+    "pollinterval": "300",
+    "verboselogging": false
+  },
+  {
+    "id": "f2aa000000000003",
+    "type": "telegram command",
+    "z": "f2aa000000000001",
+    "name": "Command /start",
+    "bot": "f2aa000000000002",
+    "command": "/start",
+    "registercommand": false,
+    "description": "",
+    "hasresponse": false,
+    "strict": false,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 1,
+    "x": 170,
+    "y": 100,
+    "wires": [
+      [
+        "f2aa000000000004"
+      ]
+    ]
+  },
+  {
+    "id": "f2aa000000000004",
+    "type": "function",
+    "z": "f2aa000000000001",
+    "name": "Reply /start",
+    "func": "msg.payload.type = \"message\";\nmsg.payload.content = \"Привет! Я учебный бот Sandrakula для лабораторной №2 по Node-RED. Используй /help для просмотра команд.\";\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 400,
+    "y": 100,
+    "wires": [
+      [
+        "f2aa000000000005"
+      ]
+    ]
+  },
+  {
+    "id": "f2aa000000000005",
+    "type": "telegram sender",
+    "z": "f2aa000000000001",
+    "name": "Send /start reply",
+    "bot": "f2aa000000000002",
+    "haserroroutput": false,
+    "outputs": 1,
+    "x": 650,
+    "y": 100,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "f2aa000000000006",
+    "type": "telegram command",
+    "z": "f2aa000000000001",
+    "name": "Command /help",
+    "bot": "f2aa000000000002",
+    "command": "/help",
+    "registercommand": false,
+    "description": "",
+    "hasresponse": false,
+    "strict": false,
+    "useregex": false,
+    "removeregexcommand": false,
+    "outputs": 1,
+    "x": 170,
+    "y": 200,
+    "wires": [
+      [
+        "f2aa000000000007"
+      ]
+    ]
+  },
+  {
+    "id": "f2aa000000000007",
+    "type": "function",
+    "z": "f2aa000000000001",
+    "name": "Reply /help",
+    "func": "msg.payload.type = \"message\";\nmsg.payload.content = \"Доступные команды: /start — запуск бота, /help — справка. Отправь любое сообщение, и я повторю его.\";\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 400,
+    "y": 200,
+    "wires": [
+      [
+        "f2aa000000000008"
+      ]
+    ]
+  },
+  {
+    "id": "f2aa000000000008",
+    "type": "telegram sender",
+    "z": "f2aa000000000001",
+    "name": "Send /help reply",
+    "bot": "f2aa000000000002",
+    "haserroroutput": false,
+    "outputs": 1,
+    "x": 650,
+    "y": 200,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "f2aa000000000009",
+    "type": "telegram receiver",
+    "z": "f2aa000000000001",
+    "name": "Receiver (echo)",
+    "bot": "f2aa000000000002",
+    "saveDataDir": "",
+    "filterCommands": true,
+    "hasinput": false,
+    "handleallupdates": false,
+    "handleprocessupdates": false,
+    "x": 170,
+    "y": 320,
+    "wires": [
+      [
+        "f2aa00000000000a"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "f2aa00000000000a",
+    "type": "function",
+    "z": "f2aa000000000001",
+    "name": "Echo text",
+    "func": "if (!msg.payload || msg.payload.type !== \"message\") {\n    return null;\n}\nconst text = msg.payload.content;\nif (typeof text !== \"string\" || text.length === 0 || text.charAt(0) === \"/\") {\n    return null;\n}\nreturn msg;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 400,
+    "y": 320,
+    "wires": [
+      [
+        "f2aa00000000000b"
+      ]
+    ]
+  },
+  {
+    "id": "f2aa00000000000b",
+    "type": "telegram sender",
+    "z": "f2aa000000000001",
+    "name": "Send echo",
+    "bot": "f2aa000000000002",
+    "haserroroutput": false,
+    "outputs": 1,
+    "x": 650,
+    "y": 320,
+    "wires": [
+      []
+    ]
+  }
+]

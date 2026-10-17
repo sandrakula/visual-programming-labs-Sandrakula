@@ -1,5 +1,6 @@
 # Node-RED runtime data contains generated state, credentials and tokens.
 lab2/node-red-data/
+lab2/backups/
 
 # Local environment overrides and secrets.
 .env
