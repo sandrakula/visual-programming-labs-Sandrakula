@@ -1,0 +1,165 @@
+{
+  "version": "6.1",
+  "id": "vfav49j5keqdzalir08vufkc",
+  "name": "lab5-sandrakula-faq",
+  "events": [
+    {
+      "id": "event-start",
+      "type": "start",
+      "outgoingEdgeId": "edge-start-welcome",
+      "graphCoordinates": { "x": 0, "y": 0 }
+    }
+  ],
+  "groups": [
+    {
+      "id": "group-welcome",
+      "title": "Приветствие",
+      "graphCoordinates": { "x": 300, "y": 0 },
+      "blocks": [
+        {
+          "id": "block-welcome-title",
+          "type": "text",
+          "content": { "plainText": "Здравствуйте! 👋" }
+        },
+        {
+          "id": "block-welcome-description",
+          "type": "text",
+          "content": {
+            "plainText": "Я — виртуальный помощник лабораторной работы №5 Сандракулы."
+          }
+        }
+      ]
+    },
+    {
+      "id": "group-menu",
+      "title": "Меню FAQ",
+      "graphCoordinates": { "x": 650, "y": 0 },
+      "blocks": [
+        {
+          "id": "block-menu-title",
+          "type": "text",
+          "content": {
+            "plainText": "Выберите вопрос о лабораторной работе или задайте свой 😊"
+          }
+        },
+        {
+          "id": "block-menu-buttons",
+          "type": "choice input",
+          "items": [
+            { "id": "choice-capabilities", "content": "Что умеет бот?" },
+            { "id": "choice-process", "content": "Как выполнена работа?" },
+            { "id": "choice-tech", "content": "Какие технологии изучены?" },
+            { "id": "choice-other", "content": "Задать другой вопрос" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "group-logic",
+      "title": "Проверка группы",
+      "graphCoordinates": { "x": 1000, "y": 0 },
+      "blocks": [
+        {
+          "id": "block-set-group",
+          "type": "set variable",
+          "options": {
+            "variableId": "variable-student-group",
+            "expressionToEvaluate": "СДП-ИИ-241"
+          }
+        },
+        {
+          "id": "block-check-group",
+          "type": "Condition",
+          "items": [
+            {
+              "id": "condition-student-group",
+              "comparisons": [
+                {
+                  "id": "comparison-student-group",
+                  "variableId": "variable-student-group",
+                  "comparisonOperator": "Equal to",
+                  "value": "СДП-ИИ-241"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "group-http",
+      "title": "HTTP-интеграция",
+      "graphCoordinates": { "x": 1350, "y": 0 },
+      "blocks": [
+        {
+          "id": "block-http",
+          "type": "http request",
+          "options": {
+            "method": "GET",
+            "url": "https://httpbin.org/get?lab=5&student=sandrakula"
+          }
+        },
+        {
+          "id": "block-finish",
+          "type": "text",
+          "content": {
+            "plainText": "Проверка завершена. Спасибо за тестирование!"
+          }
+        }
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "id": "edge-start-welcome",
+      "from": { "eventId": "event-start" },
+      "to": { "groupId": "group-welcome" }
+    },
+    {
+      "id": "edge-welcome-menu",
+      "from": { "blockId": "block-welcome-description" },
+      "to": { "groupId": "group-menu" }
+    },
+    {
+      "id": "edge-menu-logic",
+      "from": { "blockId": "block-menu-buttons" },
+      "to": { "groupId": "group-logic" }
+    },
+    {
+      "id": "edge-logic-http",
+      "from": { "blockId": "block-check-group", "itemId": "condition-student-group" },
+      "to": { "groupId": "group-http" }
+    }
+  ],
+  "variables": [
+    {
+      "id": "variable-student-group",
+      "name": "student_group",
+      "isSessionVariable": false
+    }
+  ],
+  "theme": {
+    "general": {
+      "font": "Inter",
+      "background": {
+        "type": "image",
+        "content": "Aqua Glass"
+      }
+    },
+    "chat": {
+      "hostBubbles": { "backgroundColor": "#ffffff", "color": "#27272a" },
+      "buttons": { "backgroundColor": "#ff5b2d", "color": "#ffffff" }
+    }
+  },
+  "settings": {
+    "general": { "isBrandingEnabled": true },
+    "metadata": {
+      "title": "lab5-sandrakula-faq",
+      "description": "FAQ-бот лабораторной работы №5, СДП-ИИ-241"
+    }
+  },
+  "selectedThemeTemplateId": null,
+  "icon": "💬",
+  "publicId": "lab5-sandrakula-faq-08vufkc",
+  "workspaceId": "cmvm0r009000008lfnyr5a335"
+}
