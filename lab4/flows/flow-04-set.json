@@ -1,0 +1,50 @@
+{
+  "name": "Lab4 Sandrakula 04 - Set Fields",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f04-manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "f04-topic", "name": "topic", "value": "lab4/Sandrakula/set", "type": "string" },
+            { "id": "f04-time", "name": "timestamp", "value": "={{ $now.toISO() }}", "type": "string" },
+            { "id": "f04-payload", "name": "payload", "value": "Set node completed for Sandrakula", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f04-set",
+      "name": "Set Message Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({ json: { completeMessageObject: item.json } }));"
+      },
+      "id": "f04-code",
+      "name": "Show Complete Object",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Set Message Fields", "type": "main", "index": 0 }]] },
+    "Set Message Fields": { "main": [[{ "node": "Show Complete Object", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "00000000-0000-4000-8000-000000000004",
+  "meta": { "templateCredsSetupCompleted": true },
+  "tags": []
+}

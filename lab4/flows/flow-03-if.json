@@ -1,0 +1,78 @@
+{
+  "name": "Lab4 Sandrakula 03 - IF Branching",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f03-manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [180, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const values = [3, 5, 7, 9];\nlet sum = 0;\nfor (const value of values) {\n  sum += value;\n}\nconst owner = { surname: 'Sandrakula', group: 'student' };\nlet status;\nif (sum >= 20) {\n  status = 'accepted';\n} else {\n  status = 'rejected';\n}\nreturn [{ json: { payload: { sum, status, values, owner } } }];"
+      },
+      "id": "f03-code",
+      "name": "Prepare Payload",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [420, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": true, "leftValue": "", "typeValidation": "strict", "version": 2 },
+          "conditions": [
+            {
+              "id": "f03-condition",
+              "leftValue": "={{ $json.payload.sum }}",
+              "rightValue": 20,
+              "operator": { "type": "number", "operation": "gte" }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "f03-if",
+      "name": "IF Sum >= 20",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {},
+      "id": "f03-true",
+      "name": "True - NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [900, 220]
+    },
+    {
+      "parameters": {},
+      "id": "f03-false",
+      "name": "False - NoOp",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [900, 380]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Prepare Payload", "type": "main", "index": 0 }]] },
+    "Prepare Payload": { "main": [[{ "node": "IF Sum >= 20", "type": "main", "index": 0 }]] },
+    "IF Sum >= 20": {
+      "main": [
+        [{ "node": "True - NoOp", "type": "main", "index": 0 }],
+        [{ "node": "False - NoOp", "type": "main", "index": 0 }]
+      ]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "00000000-0000-4000-8000-000000000003",
+  "meta": { "templateCredsSetupCompleted": true },
+  "tags": []
+}
+
