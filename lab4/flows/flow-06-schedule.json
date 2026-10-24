@@ -1,0 +1,34 @@
+{
+  "name": "Lab4 Sandrakula 06 - Schedule Every 5 Minutes",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": { "interval": [{ "field": "minutes", "minutesInterval": 5 }] }
+      },
+      "id": "f06-schedule",
+      "name": "Every 5 Minutes",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [340, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const now = new Date();\nreturn [{ json: { payload: 'Scheduled execution for Sandrakula', isoTime: now.toISOString(), unixTime: now.getTime() } }];"
+      },
+      "id": "f06-code",
+      "name": "Return Current Time",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [620, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Every 5 Minutes": { "main": [[{ "node": "Return Current Time", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1", "timezone": "Europe/Moscow" },
+  "versionId": "00000000-0000-4000-8000-000000000006",
+  "meta": { "templateCredsSetupCompleted": true },
+  "tags": []
+}

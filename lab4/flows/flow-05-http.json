@@ -1,0 +1,45 @@
+{
+  "name": "Lab4 Sandrakula 05 - HTTP Cat Fact",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f05-manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "url": "https://catfact.ninja/fact",
+        "options": { "response": { "response": { "responseFormat": "json" } } }
+      },
+      "id": "f05-http",
+      "name": "GET Cat Fact",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({ json: { payload: item.json.fact, length: item.json.length, source: 'catfact.ninja', student: 'Sandrakula' } }));"
+      },
+      "id": "f05-code",
+      "name": "Format API Result",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "GET Cat Fact", "type": "main", "index": 0 }]] },
+    "GET Cat Fact": { "main": [[{ "node": "Format API Result", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "00000000-0000-4000-8000-000000000005",
+  "meta": { "templateCredsSetupCompleted": true },
+  "tags": []
+}
+
