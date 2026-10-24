@@ -1,0 +1,53 @@
+{
+  "name": "Lab4 Achievement 5.2 - Notes API List",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "GET",
+        "path": "lab4/sandrakula/notes",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f08-webhook",
+      "name": "GET Notes",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [220, 300],
+      "webhookId": "sandrakula-notes-get"
+    },
+    {
+      "parameters": {
+        "operation": "keys",
+        "keyPattern": "notes:sandrakula:*",
+        "getValues": true
+      },
+      "id": "f08-redis",
+      "name": "Redis List Notes",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": { "responseCode": 200 }
+      },
+      "id": "f08-response",
+      "name": "200 Notes JSON",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [780, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "GET Notes": { "main": [[{ "node": "Redis List Notes", "type": "main", "index": 0 }]] },
+    "Redis List Notes": { "main": [[{ "node": "200 Notes JSON", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "00000000-0000-4000-8000-000000000008",
+  "meta": { "templateCredsSetupCompleted": false },
+  "tags": []
+}
+

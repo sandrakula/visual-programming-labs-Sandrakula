@@ -1,0 +1,67 @@
+{
+  "name": "Lab4 Achievement 5.2 - Notes API Create",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lab4/sandrakula/notes",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "f07-webhook",
+      "name": "POST Note",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [160, 300],
+      "webhookId": "sandrakula-notes-post"
+    },
+    {
+      "parameters": {
+        "jsCode": "const body = $json.body ?? $json;\nif (!body.title || !body.text) {\n  throw new Error('Fields title and text are required');\n}\nconst id = `${Date.now()}`;\nconst note = { id, title: body.title, text: body.text, author: 'Sandrakula', createdAt: new Date().toISOString() };\nreturn [{ json: { id, redisKey: `notes:sandrakula:${id}`, note } }];"
+      },
+      "id": "f07-code",
+      "name": "Validate and Build Note",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [400, 300]
+    },
+    {
+      "parameters": {
+        "operation": "set",
+        "key": "={{ $json.redisKey }}",
+        "value": "={{ JSON.stringify($json.note) }}",
+        "keyType": "string",
+        "expire": false
+      },
+      "id": "f07-redis",
+      "name": "Redis Save Note",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ { ok: true, message: 'Note stored in Redis', student: 'Sandrakula' } }}",
+        "options": { "responseCode": 201 }
+      },
+      "id": "f07-response",
+      "name": "201 Created",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [920, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "POST Note": { "main": [[{ "node": "Validate and Build Note", "type": "main", "index": 0 }]] },
+    "Validate and Build Note": { "main": [[{ "node": "Redis Save Note", "type": "main", "index": 0 }]] },
+    "Redis Save Note": { "main": [[{ "node": "201 Created", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "00000000-0000-4000-8000-000000000007",
+  "meta": { "templateCredsSetupCompleted": false },
+  "tags": []
+}
+
