@@ -1,0 +1,47 @@
+{
+  "name": "Lab4 Sandrakula 10 - Redis Delete and Exists",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f10-manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "key": "sandrakula"
+      },
+      "id": "f10-delete",
+      "name": "Redis Delete sandrakula",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [480, 300]
+    },
+    {
+      "parameters": {
+        "operation": "exists",
+        "key": "sandrakula",
+        "propertyName": "exists"
+      },
+      "id": "f10-exists",
+      "name": "Redis Exists sandrakula",
+      "type": "n8n-nodes-base.redis",
+      "typeVersion": 1,
+      "position": [740, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Redis Delete sandrakula", "type": "main", "index": 0 }]] },
+    "Redis Delete sandrakula": { "main": [[{ "node": "Redis Exists sandrakula", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "00000000-0000-4000-8000-000000000010",
+  "meta": { "templateCredsSetupCompleted": false },
+  "tags": []
+}
+
