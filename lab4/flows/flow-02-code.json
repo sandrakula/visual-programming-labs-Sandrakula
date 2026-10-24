@@ -1,0 +1,41 @@
+{
+  "name": "Lab4 Sandrakula 02 - JavaScript Basics",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f02-manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const surname = 'Sandrakula';\nconst values = [2, 4, 6, 8];\nlet sum = 0;\nfor (let i = 0; i < values.length; i++) {\n  sum += values[i];\n}\nlet category;\nif (sum >= 20) {\n  category = 'large';\n} else {\n  category = 'small';\n}\nconst result = { surname, values, sum, category };\nreturn [{ json: { payload: result } }];"
+      },
+      "id": "f02-code",
+      "name": "Code JS Basics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {},
+      "id": "f02-noop",
+      "name": "No Operation",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [740, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Code JS Basics", "type": "main", "index": 0 }]] },
+    "Code JS Basics": { "main": [[{ "node": "No Operation", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "00000000-0000-4000-8000-000000000002",
+  "meta": { "templateCredsSetupCompleted": true },
+  "tags": []
+}

@@ -1,0 +1,50 @@
+{
+  "name": "Lab4 Sandrakula 01 - Manual Set Code",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f01-manual",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [260, 300]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            { "id": "f01-payload", "name": "payload", "value": "Sandrakula", "type": "string" },
+            { "id": "f01-topic", "name": "topic", "value": "lab4/Sandrakula/basic", "type": "string" }
+          ]
+        },
+        "options": {}
+      },
+      "id": "f01-set",
+      "name": "Set Sandrakula Data",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(item => ({ json: { ...item.json, debug: `payload=${item.json.payload}; topic=${item.json.topic}` } }));"
+      },
+      "id": "f01-code",
+      "name": "Code Debug",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [740, 300]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": { "main": [[{ "node": "Set Sandrakula Data", "type": "main", "index": 0 }]] },
+    "Set Sandrakula Data": { "main": [[{ "node": "Code Debug", "type": "main", "index": 0 }]] }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "versionId": "00000000-0000-4000-8000-000000000001",
+  "meta": { "templateCredsSetupCompleted": true },
+  "tags": []
+}
+
